@@ -6,7 +6,7 @@ import {
   CheckCircle2, 
   Zap, 
   ShoppingBag, 
-} from 'lucide-center';
+} from 'lucide-react';
 import { useLanguage } from '@/components/layout/LanguageProvider';
 
 export default function BillingPage() {
