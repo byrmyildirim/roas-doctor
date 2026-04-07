@@ -1,0 +1,235 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Organization {
+  id                String             @id @default(cuid())
+  name              String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  memberships       Membership[]
+  shops             ShopConnection[]
+  metaConnections   MetaConnection[]
+  googleConnections GoogleAdsConnection[]
+  auditRuns         AuditRun[]
+  scoreSnapshots    ScoreSnapshot[]
+}
+
+model User {
+  id            String       @id @default(cuid())
+  email         String       @unique
+  name          String?
+  image         String?
+  memberships   Membership[]
+}
+
+model Membership {
+  id             String       @id @default(cuid())
+  role           Role         @default(VIEWER)
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  user           User         @relation(fields: [userId], references: [id])
+  userId         String
+}
+
+model ShopConnection {
+  id             String       @id @default(cuid())
+  domain         String       @unique
+  accessToken    String
+  shopId         String?      @unique
+  status         ConnectionStatus @default(CONNECTED)
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  products       Product[]
+  collections    Collection[]
+  lastSyncAt     DateTime?
+}
+
+model MetaConnection {
+  id             String       @id @default(cuid())
+  accessToken    String
+  refreshToken   String?
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  accounts       MetaAdAccount[]
+  status         ConnectionStatus @default(CONNECTED)
+}
+
+model MetaAdAccount {
+  id               String       @id // Meta Ad Account ID
+  name             String
+  currency         String
+  metaConnectionId String
+  metaConnection   MetaConnection @relation(fields: [metaConnectionId], references: [id])
+  campaigns        MetaCampaign[]
+  organizationId   String // For denormalized filtering
+}
+
+model MetaCampaign {
+  id           String       @id
+  name         String
+  status       String
+  adAccountId  String
+  adAccount    MetaAdAccount @relation(fields: [adAccountId], references: [id])
+  ads          MetaAd[]
+}
+
+model MetaAd {
+  id           String       @id
+  name         String
+  status       String
+  campaignId   String
+  campaign     MetaCampaign @relation(fields: [campaignId], references: [id])
+  headlines    String[]
+  bodyText     String[]
+  displayUrl   String?
+  landingUrl   String
+  match        AdToPageMatch?
+}
+
+model GoogleAdsConnection {
+  id             String       @id @default(cuid())
+  accessToken    String
+  refreshToken   String
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  organizationId String
+  accounts       GoogleAdAccount[]
+}
+
+model GoogleAdAccount {
+  id                   String       @id // Google Ads Customer ID
+  name                 String
+  googleConnectionId   String
+  googleAdsConnection  GoogleAdsConnection @relation(fields: [googleConnectionId], references: [id])
+  campaigns            GoogleCampaign[]
+}
+
+model GoogleCampaign {
+  id            String       @id
+  name          String
+  status        String
+  adAccountId   String
+  adAccount     GoogleAdAccount @relation(fields: [adAccountId], references: [id])
+  ads           GoogleAd[]
+}
+
+model GoogleAd {
+  id           String       @id
+  campaignId   String
+  campaign     GoogleCampaign @relation(fields: [campaignId], references: [id])
+  headlines    String[]
+  descriptions String[]
+  landingUrl   String
+  match        AdToPageMatch?
+}
+
+model Product {
+  id               String       @id // Shopify Product ID
+  title            String
+  handle           String
+  description      String?
+  imageUrl         String?
+  shopConnectionId String
+  shopConnection   ShopConnection @relation(fields: [shopConnectionId], references: [id])
+  price            Decimal?
+  currency         String?
+  matches          AdToPageMatch[]
+}
+
+model Collection {
+  id               String       @id
+  title            String
+  handle           String
+  shopConnectionId String
+  shopConnection   ShopConnection @relation(fields: [shopConnectionId], references: [id])
+}
+
+model AdToPageMatch {
+  id               String       @id @default(cuid())
+  metaAdId         String?      @unique
+  metaAd           MetaAd?      @relation(fields: [metaAdId], references: [id])
+  googleAdId       String?      @unique
+  googleAd         GoogleAd?    @relation(fields: [googleAdId], references: [id])
+  productId        String?
+  product          Product?     @relation(fields: [productId], references: [id])
+  landingUrl       String
+  confidenceScore  Float
+  matchRationale   String?
+  auditResults     AuditResult[]
+}
+
+model AuditResult {
+  id               String       @id @default(cuid())
+  matchId          String?
+  match            AdToPageMatch? @relation(fields: [matchId], references: [id])
+  auditRunId       String
+  auditRun         AuditRun       @relation(fields: [auditRunId], references: [id])
+  score            Float
+  findings         Finding[]
+}
+
+model AuditRun {
+  id               String       @id @default(cuid())
+  organizationId   String
+  organization     Organization @relation(fields: [organizationId], references: [id])
+  status           AuditStatus  @default(PENDING)
+  overallScore     Float?
+  results          AuditResult[]
+  createdAt        DateTime     @default(now())
+}
+
+model Finding {
+  id               String       @id @default(cuid())
+  auditResultId    String
+  auditResult      AuditResult  @relation(fields: [auditResultId], references: [id])
+  title            String
+  description      String
+  severity         Severity     @default(MEDIUM)
+  recommendation   String
+}
+
+model ScoreSnapshot {
+  id               String       @id @default(cuid())
+  organizationId   String
+  organization     Organization @relation(fields: [organizationId], references: [id])
+  overallScore     Float
+  metaScore        Float
+  googleScore      Float
+  shopifyScore     Float
+  timestamp        DateTime     @default(now())
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  ANALYST
+  VIEWER
+}
+
+enum ConnectionStatus {
+  CONNECTED
+  DISCONNECTED
+  ERROR
+}
+
+enum AuditStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+}
+
+enum Severity {
+  CRITICAL
+  HIGH
+  MEDIUM
+  LOW
+}
