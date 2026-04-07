@@ -29,7 +29,7 @@ export default function StatCard({ label, value, icon: Icon, trend, color, descr
   };
 
   return (
-    <div className="group relative p-6 rounded-2xl bg-zinc-900 border border-zinc-800/50 hover:bg-zinc-800/30 transition-all duration-300">
+    <div className="group relative p-6 rounded-2xl bg-white border border-zinc-200 hover:bg-zinc-50 transition-all duration-300 shadow-sm">
       <div className="flex justify-between items-start mb-4">
         <div className={`p-3 rounded-xl ${color} bg-opacity-10 border border-opacity-20`}>
           <Icon className={`w-5 h-5 ${color.replace('bg-', 'text-')}`} />
@@ -43,8 +43,8 @@ export default function StatCard({ label, value, icon: Icon, trend, color, descr
       </div>
 
       <div>
-        <h3 className="text-zinc-400 text-sm font-medium mb-1">{label}</h3>
-        <div className="text-2xl font-bold tracking-tight text-white mb-2">{value}</div>
+        <h3 className="text-zinc-500 text-sm font-medium mb-1">{label}</h3>
+        <div className="text-2xl font-bold tracking-tight text-zinc-900 mb-2">{value}</div>
         {description && <p className="text-xs text-zinc-500 leading-relaxed">{description}</p>}
       </div>
 
