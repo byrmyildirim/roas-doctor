@@ -10,7 +10,8 @@ import {
   Table,
   Filter,
   BarChart3,
-  Search
+  Search,
+  Sparkles
 } from 'lucide-react';
 
 const accounts = [
