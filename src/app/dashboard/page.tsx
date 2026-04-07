@@ -9,7 +9,9 @@ import {
   Zap, 
   AlertCircle, 
   CheckCircle2, 
-  ArrowUpRight 
+  ArrowUpRight,
+  History,
+  Sparkles
 } from 'lucide-react';
 
 export default function DashboardPage() {
