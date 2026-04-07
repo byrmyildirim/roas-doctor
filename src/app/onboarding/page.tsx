@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/components/layout/LanguageProvider';
+import { LanguageSelector } from '@/components/layout/LanguageSelector';
 
 const steps = [
   { id: 1, name: 'Workspace', icon: LayoutDashboard },
@@ -26,6 +28,7 @@ export default function OnboardingPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [shopName, setShopName] = useState('');
   const router = useRouter();
+  const { t } = useLanguage();
 
   const nextStep = () => setCurrentStep((s) => Math.min(s + 1, 4));
 
@@ -57,6 +60,7 @@ export default function OnboardingPage() {
           <span className="font-bold text-xl tracking-tight">AdStore Match</span>
         </div>
         <div className="flex items-center gap-6">
+          <LanguageSelector />
           <div className="hidden md:flex gap-4">
             {steps.map((step) => (
               <div key={step.id} className="flex items-center gap-2">
@@ -80,12 +84,12 @@ export default function OnboardingPage() {
         {currentStep === 1 && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div>
-              <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">Let's build your <span className="text-blue-500">Command Center</span>.</h2>
+              <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">{t('let_build')}</h2>
               <p className="text-zinc-400 text-lg">Every great audit starts with a dedicated workspace. Name it for your brand or agency.</p>
             </div>
             
             <div className="space-y-4">
-              <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block px-1">Workspace Name</label>
+              <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block px-1">{t('workspace_name')}</label>
               <input 
                 type="text" 
                 placeholder="e.g. Roas Doctor, Bloom Agency"
@@ -105,7 +109,7 @@ export default function OnboardingPage() {
               onClick={nextStep}
               className="w-full py-4 bg-white text-black font-bold text-lg rounded-2xl hover:bg-zinc-200 transition-all active:scale-[0.98] flex items-center justify-center gap-2 group shadow-xl shadow-white/10"
             >
-              Continue Workspace Setup
+              {t('continue_setup')}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
@@ -114,12 +118,12 @@ export default function OnboardingPage() {
         {currentStep === 2 && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
              <div>
-              <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">Connect your <span className="text-emerald-500">Shopify Store</span>.</h2>
+              <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">{t('connect_shopify')}</h2>
               <p className="text-zinc-400 text-lg">We need access to sync your catalog, landing pages, and conversion events to detect bottlenecks.</p>
             </div>
 
             <div className="space-y-4">
-              <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block px-1">Shop domain</label>
+              <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest block px-1">{t('shop_domain')}</label>
               <div className="relative">
                 <input 
                   type="text" 
@@ -146,7 +150,7 @@ export default function OnboardingPage() {
               className="w-full py-4 bg-[#95BF47] text-white font-bold text-lg rounded-2xl hover:bg-[#7AB55C] transition-all active:scale-[0.98] flex items-center justify-center gap-3 group shadow-xl shadow-[#95BF47]/20"
             >
               <ShoppingBag className="w-5 h-5 fill-white" />
-              Authorize Shopify Connection
+              {t('auth_shopify')}
             </button>
           </div>
         )}
@@ -154,7 +158,7 @@ export default function OnboardingPage() {
         {currentStep === 3 && (
           <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
              <div>
-              <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">Bridge the <span className="text-indigo-400">Paid Traffic Gap</span>.</h2>
+              <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">{t('bridge_gap')}</h2>
               <p className="text-zinc-400 text-lg">Connect your Meta and Google Ads to start the Ad-to-Page alignment audit.</p>
             </div>
 
@@ -168,7 +172,7 @@ export default function OnboardingPage() {
                     <Megaphone className="w-6 h-6" />
                   </div>
                   <div className="text-left">
-                    <div className="text-lg">Connect Meta Ads</div>
+                    <div className="text-lg">{t('connect_meta')}</div>
                     <div className="text-xs font-normal text-white/70">Marketing API access</div>
                   </div>
                 </div>
@@ -184,7 +188,7 @@ export default function OnboardingPage() {
                     <Search className="w-6 h-6 text-zinc-900" />
                   </div>
                   <div className="text-left">
-                    <div className="text-lg">Connect Google Ads</div>
+                    <div className="text-lg">{t('connect_google')}</div>
                     <div className="text-xs font-normal text-zinc-500">Search Ads API access</div>
                   </div>
                 </div>
@@ -208,7 +212,7 @@ export default function OnboardingPage() {
              </div>
 
              <div>
-              <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">We're ready to <span className="text-amber-400">Launch Audit</span>.</h2>
+              <h2 className="text-4xl font-bold tracking-tight mb-4 text-white">{t('ready_launch')}</h2>
               <p className="text-zinc-400 text-lg max-w-md mx-auto">Connections established. Our engine is ready to sync 24 campaigns and 148 product pages.</p>
             </div>
 
@@ -217,7 +221,7 @@ export default function OnboardingPage() {
                 href="/dashboard"
                 className="w-full py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-lg rounded-2xl hover:opacity-90 transition-all active:scale-[0.98] flex items-center justify-center gap-2 group shadow-xl shadow-blue-600/30"
               >
-                Launch Primary Audit
+                {t('launch_primary')}
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
               <button className="text-sm font-semibold text-zinc-500 hover:text-white transition-colors">

@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import { 
@@ -14,24 +15,28 @@ import {
   ChevronRight,
   Sparkles
 } from 'lucide-react';
-
-const navItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Shopify Store', href: '/dashboard/shopify', icon: ShoppingBag },
-  { name: 'Meta Ads', href: '/dashboard/meta', icon: Megaphone },
-  { name: 'Google Ads', href: '/dashboard/google', icon: Search },
-  { name: 'Audit Hub', href: '/dashboard/audits', icon: ClipboardCheck },
-  { name: 'Recommendations', href: '/dashboard/recommendations', icon: Sparkles },
-  { name: 'History', href: '/dashboard/history', icon: History },
-];
-
-const secondaryNavItems = [
-  { name: 'Team', href: '/dashboard/team', icon: Users },
-  { name: 'Billing', href: '/dashboard/billing', icon: CreditCard },
-  { name: 'Settings', href: '/dashboard/settings', icon: Settings },
-];
+import { useLanguage } from './LanguageProvider';
+import { LanguageSelector } from './LanguageSelector';
 
 export default function Shell({ children }: { children: React.ReactNode }) {
+  const { t } = useLanguage();
+
+  const navItems = [
+    { name: t('dashboard'), href: '/dashboard', icon: LayoutDashboard },
+    { name: t('shopify_store'), href: '/dashboard/shopify', icon: ShoppingBag },
+    { name: t('meta_ads'), href: '/dashboard/meta', icon: Megaphone },
+    { name: t('google_ads'), href: '/dashboard/google', icon: Search },
+    { name: t('audit_hub'), href: '/dashboard/audits', icon: ClipboardCheck },
+    { name: t('recommendations'), href: '/dashboard/recommendations', icon: Sparkles },
+    { name: t('history'), href: '/dashboard/history', icon: History },
+  ];
+
+  const secondaryNavItems = [
+    { name: 'Team', href: '/dashboard/team', icon: Users },
+    { name: t('billing'), href: '/dashboard/billing', icon: CreditCard },
+    { name: t('settings'), href: '/dashboard/settings', icon: Settings },
+  ];
+
   return (
     <div className="flex h-screen bg-[#0a0a0b] text-zinc-100 font-sans selection:bg-blue-500/30">
       {/* Sidebar */}
@@ -99,6 +104,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           </div>
 
           <div className="flex items-center gap-4">
+            <LanguageSelector />
             <div className="flex -space-x-2">
               <div className="w-7 h-7 rounded-full bg-blue-500 border-2 border-[#0a0a0b] flex items-center justify-center text-[10px] font-bold">JD</div>
               <div className="w-7 h-7 rounded-full bg-emerald-500 border-2 border-[#0a0a0b] flex items-center justify-center text-[10px] font-bold">AA</div>
