@@ -53,6 +53,7 @@ export const dictionaries = {
     feature_2_desc: "Shopify katalog güncellemeleri anında senkronize olur; manuel kontrol ve takibe gerek kalmaz.",
     feature_3_title: "Önceliklendirilmiş Aksiyonlar",
     feature_3_desc: "Gelir ve ciro üzerindeki etkisine göre sıralanmış, yapay zeka destekli uygulama planları edinin.",
+    skip_step: "Bu adımı atla (Zaten kurulu)",
   },
   en: {
     dashboard: "Dashboard",
@@ -106,7 +107,8 @@ export const dictionaries = {
     feature_2_title: "Real-time Webhook Sync",
     feature_2_desc: "Catalog updates sync in real-time, zero manual tracking required.",
     feature_3_title: "Prioritized Actions",
-    feature_3_desc: "Get AI-driven implementation plans sorted by revenue impact."
+    feature_3_desc: "Get AI-driven implementation plans sorted by revenue impact.",
+    skip_step: "Skip this step (Already installed)",
   }
 };
 

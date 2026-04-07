@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Sparkles, 
   ShoppingBag, 
@@ -29,6 +29,16 @@ export default function OnboardingPage() {
   const [shopName, setShopName] = useState('');
   const router = useRouter();
   const { t } = useLanguage();
+
+  useEffect(() => {
+    // URL'de shop parametresi var mı kontrol et (Shopify üzerinden geldiyse)
+    const params = new URLSearchParams(window.location.search);
+    const shop = params.get('shop');
+    if (shop) {
+      // xxx.myshopify.com formatından sadece xxx kısmını alalım (veya tamamlansın)
+      setShopName(shop.replace('.myshopify.com', ''));
+    }
+  }, []);
 
   const nextStep = () => setCurrentStep((s) => Math.min(s + 1, 4));
 
@@ -145,13 +155,22 @@ export default function OnboardingPage() {
               </div>
             </div>
 
-             <button 
-              onClick={handleShopifyConnect}
-              className="w-full py-4 bg-[#95BF47] text-white font-bold text-lg rounded-2xl hover:bg-[#7AB55C] transition-all active:scale-[0.98] flex items-center justify-center gap-3 group shadow-xl shadow-[#95BF47]/20"
-            >
-              <ShoppingBag className="w-5 h-5 fill-white" />
-              {t('auth_shopify')}
-            </button>
+            <div className="space-y-3">
+               <button 
+                onClick={handleShopifyConnect}
+                className="w-full py-4 bg-[#95BF47] text-white font-bold text-lg rounded-2xl hover:bg-[#7AB55C] transition-all active:scale-[0.98] flex items-center justify-center gap-3 group shadow-xl shadow-[#95BF47]/20"
+              >
+                <ShoppingBag className="w-5 h-5 fill-white" />
+                {t('auth_shopify')}
+              </button>
+
+              <button 
+                onClick={nextStep}
+                className="w-full py-3 text-zinc-400 hover:text-white font-medium text-sm transition-colors decoration-dashed decoration-zinc-600 underline underline-offset-4"
+              >
+                {t('skip_step')}
+              </button>
+            </div>
           </div>
         )}
 
