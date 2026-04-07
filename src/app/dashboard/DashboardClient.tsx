@@ -13,7 +13,6 @@ import {
   CheckCircle2, 
   ArrowUpRight,
   History,
-  Sparkles,
   Loader2
 } from 'lucide-react';
 import { useLanguage } from '@/components/layout/LanguageProvider';
@@ -66,14 +65,16 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
             <h1 className="text-3xl font-bold tracking-tight text-zinc-900 mb-1">{t('account_overview')}</h1>
             <p className="text-zinc-500 text-sm">{t('last_sync')} {stats.lastSync}.</p>
           </div>
-          <button 
-            onClick={handleSyncShopify}
-            disabled={isSyncing}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-blue-600/25 active:scale-95 disabled:opacity-50"
-          >
-            {isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4 fill-white" />}
-            {t('trigger_audit')}
-          </button>
+          <div className="flex gap-3">
+            <button 
+              onClick={handleSyncShopify}
+              disabled={isSyncing}
+              className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold rounded-xl transition-all shadow-lg shadow-blue-600/25 active:scale-95 disabled:opacity-50"
+            >
+              {isSyncing ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4 fill-white" />}
+              {t('trigger_audit')}
+            </button>
+          </div>
         </div>
 
         {/* Top Tier Stats */}
@@ -148,7 +149,7 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
                     iconColor: 'text-red-500',
                   }
                 ].map((item, idx) => (
-                  <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-300 transition-colors group cursor-pointer">
+                  <div key={idx} className="flex items-start gap-4 p-4 rounded-xl bg-zinc-50 border border-zinc-200 hover:border-zinc-300 transition-colors group cursor-pointer shadow-sm">
                     <div className={`mt-1 ${item.iconColor}`}>
                       <item.icon className="w-5 h-5" />
                     </div>
@@ -170,59 +171,31 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-               <div className="p-6 rounded-2xl bg-white border border-zinc-200 shadow-sm">
-                <h3 className="text-sm font-medium text-zinc-500 mb-4">{t('ad_health')}</h3>
-                <div className="space-y-4">
-                   <div className="flex items-center justify-between">
-                     <div className="flex items-center gap-3">
-                       <div className="w-2 h-2 rounded-full bg-blue-500" />
-                       <span className="text-sm text-zinc-700 font-medium">Meta Ads (Roas Dr.)</span>
-                     </div>
-                     <div className="flex items-center gap-2">
-                       <span className="text-xs text-emerald-600 font-bold">{t('active')}</span>
-                       <button 
-                        onClick={handleConnectMeta}
-                        className="px-2 py-1 bg-blue-500/10 text-blue-600 text-[10px] font-bold rounded-lg border border-blue-500/20 hover:bg-blue-500/20 transition-all">
-                         {t('connect_meta')}
-                       </button>
-                     </div>
-                   </div>
-                   <div className="flex items-center justify-between">
-                     <div className="flex items-center gap-3">
-                       <div className="w-2 h-2 rounded-full bg-amber-500" />
-                       <span className="text-sm text-zinc-700 font-medium">Google Ads (Main)</span>
-                     </div>
-                     <div className="flex items-center gap-2">
-                       <span className="text-xs text-emerald-600 font-bold">{t('active')}</span>
-                       <button 
-                        onClick={handleConnectGoogle}
-                        className="px-2 py-1 bg-amber-500/10 text-amber-600 text-[10px] font-bold rounded-lg border border-amber-500/20 hover:bg-amber-500/20 transition-all">
-                         {t('connect_google')}
-                       </button>
-                     </div>
-                   </div>
-                   <div className="flex items-center justify-between">
-                     <div className="flex items-center gap-3">
-                       <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                       <span className="text-sm text-zinc-700 font-medium">Shopify Store</span>
-                     </div>
-                     <span className="text-xs text-emerald-600 font-bold">{t('connected')}</span>
-                   </div>
-                </div>
-              </div>
-
-               <div className="p-6 rounded-2xl bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 relative overflow-hidden group">
-                <div className="relative z-10">
-                  <h3 className="text-sm font-medium text-blue-700 mb-2">{t('pro_feature')}</h3>
-                  <p className="text-xs text-zinc-600 leading-relaxed mb-4">
-                    {t('pro_desc')}
-                  </p>
-                  <button className="text-xs font-bold text-white px-3 py-1.5 bg-blue-600 rounded-lg group-hover:bg-blue-500 transition-all">
-                    {t('upgrade_pro')}
-                  </button>
-                </div>
-                <Sparkles className="absolute -right-4 -bottom-4 w-24 h-24 text-blue-500/10 group-hover:text-blue-500/20 transition-all duration-700 rotate-12" />
+            <div className="p-6 rounded-2xl bg-white border border-zinc-200 shadow-sm">
+              <h3 className="text-sm font-medium text-zinc-500 mb-4">{t('ad_health')}</h3>
+              <div className="space-y-4">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-blue-500" />
+                      <span className="text-sm text-zinc-700 font-medium">Meta Ads</span>
+                    </div>
+                    <button 
+                      onClick={handleConnectMeta}
+                      className="px-3 py-1 bg-blue-600 text-white text-xs font-bold rounded-lg hover:bg-blue-500 transition-all shadow-sm">
+                      {t('connect_meta')}
+                    </button>
+                  </div>
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div className="flex items-center gap-3">
+                      <div className="w-2 h-2 rounded-full bg-amber-500" />
+                      <span className="text-sm text-zinc-700 font-medium">Google Ads</span>
+                    </div>
+                    <button 
+                      onClick={handleConnectGoogle}
+                      className="px-3 py-1 bg-amber-600 text-white text-xs font-bold rounded-lg hover:bg-amber-500 transition-all shadow-sm">
+                      {t('connect_google')}
+                    </button>
+                  </div>
               </div>
             </div>
           </div>
@@ -233,10 +206,9 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
               <h3 className="text-sm font-medium text-zinc-500 mb-4">{t('recent_activity')}</h3>
               <div className="relative pl-4 border-l border-zinc-200 space-y-6">
                 {[
-                  { title: 'Google Shopping Feed Synced', time: '12 mins ago', icon: Zap, iconBg: 'bg-amber-100', iconColor: 'text-amber-600' },
-                  { title: 'Meta Catalog Updated', time: '1 hr ago', icon: Activity, iconBg: 'bg-blue-100', iconColor: 'text-blue-600' },
-                  { title: 'Product Pricing Changed (12 items)', time: '3 hrs ago', icon: ShoppingBag, iconBg: 'bg-emerald-100', iconColor: 'text-emerald-600' },
-                  { title: 'Audit Completed: 92% Match', time: 'Yesterday', icon: CheckCircle2, iconBg: 'bg-purple-100', iconColor: 'text-purple-600' }
+                  { title: 'Google Ads Synced', time: '12 mins ago', icon: Zap, iconBg: 'bg-amber-100', iconColor: 'text-amber-600' },
+                  { title: 'Meta Ads Synced', time: '1 hr ago', icon: Activity, iconBg: 'bg-blue-100', iconColor: 'text-blue-600' },
+                  { title: 'Shopify Catalog Synced', time: 'Yesterday', icon: ShoppingBag, iconBg: 'bg-emerald-100', iconColor: 'text-emerald-600' }
                 ].map((act, idx) => (
                   <div key={idx} className="relative">
                     <div className={`absolute -left-[25px] w-6 h-6 rounded-full ${act.iconBg} flex items-center justify-center border-4 border-white`}>
@@ -251,14 +223,14 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
               </div>
             </div>
 
-            <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 shadow-xl relative overflow-hidden text-center group">
+            <div className="p-6 rounded-2xl bg-zinc-50 border border-zinc-200 shadow-sm relative overflow-hidden text-center group">
               <div className="relative z-10 flex flex-col items-center">
-                <div className="w-12 h-12 rounded-full bg-black/5 flex items-center justify-center mb-4">
-                  <History className="w-6 h-6 text-zinc-900" />
+                <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center mb-4">
+                  <History className="w-6 h-6 text-zinc-400" />
                 </div>
                 <h3 className="text-zinc-900 font-bold mb-2">{t('export_report_title')}</h3>
                 <p className="text-zinc-500 text-xs mb-4">{t('export_report_desc')}</p>
-                <button className="w-full py-2 bg-zinc-900 text-white font-semibold text-sm rounded-xl hover:bg-zinc-800 transition-colors">
+                <button className="w-full py-2 bg-blue-600 text-white font-semibold text-sm rounded-xl hover:bg-blue-500 transition-colors shadow-lg shadow-blue-600/20">
                   {t('download_pdf')}
                 </button>
               </div>

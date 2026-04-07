@@ -9,15 +9,12 @@ import {
   ClipboardCheck, 
   Settings, 
   History, 
-  Users, 
-  CreditCard, 
   LogOut,
   ChevronRight,
   Sparkles
 } from 'lucide-react';
 import { useLanguage } from './LanguageProvider';
 import { LanguageSelector } from './LanguageSelector';
-import { ThemeToggle } from './ThemeToggle';
 
 export default function Shell({ children }: { children: React.ReactNode }) {
   const { t } = useLanguage();
@@ -28,13 +25,10 @@ export default function Shell({ children }: { children: React.ReactNode }) {
     { name: t('meta_ads'), href: '/dashboard/meta', icon: Megaphone },
     { name: t('google_ads'), href: '/dashboard/google', icon: Search },
     { name: t('audit_hub'), href: '/dashboard/audits', icon: ClipboardCheck },
-    { name: t('recommendations'), href: '/dashboard/recommendations', icon: Sparkles },
     { name: t('history'), href: '/dashboard/history', icon: History },
   ];
 
   const secondaryNavItems = [
-    { name: 'Team', href: '/dashboard/team', icon: Users },
-    { name: t('billing'), href: '/dashboard/billing', icon: CreditCard },
     { name: t('settings'), href: '/dashboard/settings', icon: Settings },
   ];
 
@@ -70,7 +64,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
           ))}
 
           <div className="pt-8 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider px-2 mb-2">
-            Management
+            System
           </div>
           {secondaryNavItems.map((item) => (
             <Link
@@ -96,24 +90,23 @@ export default function Shell({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto relative bg-grid-black/[0.02]">
+      <main className="flex-1 overflow-y-auto relative">
         {/* Top Header */}
         <header className="sticky top-0 z-30 h-16 border-b border-zinc-200 bg-white/80 backdrop-blur-md flex items-center justify-between px-8">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-zinc-500">Workspace /</span>
-            <span className="text-sm font-semibold">Roas Doctor</span>
+            <span className="text-sm font-medium text-zinc-400">Workspace /</span>
+            <span className="text-sm font-semibold text-zinc-900">Roas Doctor</span>
           </div>
 
           <div className="flex items-center gap-4">
             <LanguageSelector />
-            <div className="flex -space-x-2">
-              <div className="w-7 h-7 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center text-[10px] font-bold text-white">JD</div>
-              <div className="w-7 h-7 rounded-full bg-emerald-500 border-2 border-white flex items-center justify-center text-[10px] font-bold text-white">AA</div>
-            </div>
             <div className="h-6 w-px bg-zinc-200 mx-2" />
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-100 rounded-lg border border-zinc-200">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-zinc-50 rounded-lg border border-zinc-100">
               <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span className="text-xs font-medium text-zinc-600">Live Sync</span>
+              <span className="text-xs font-medium text-zinc-500">Live Sync</span>
+            </div>
+            <div className="w-8 h-8 rounded-full bg-zinc-100 border border-zinc-200 flex items-center justify-center text-[10px] font-bold text-zinc-600">
+              BY
             </div>
           </div>
         </header>
