@@ -34,11 +34,20 @@ export default function OnboardingPage() {
     // URL'de shop parametresi var mı kontrol et (Shopify üzerinden geldiyse)
     const params = new URLSearchParams(window.location.search);
     const shop = params.get('shop');
+    const host = params.get('host');
+    
+    if (shop && host) {
+      // Eğer shop ve host varsa, muhtemelen Shopify içinden geliyoruz.
+      // Kurulum ekranlarını atlayıp direkt dashboard'a gidiyoruz.
+      router.push(`/dashboard${window.location.search}`);
+      return;
+    }
+
     if (shop) {
       // xxx.myshopify.com formatından sadece xxx kısmını alalım (veya tamamlansın)
       setShopName(shop.replace('.myshopify.com', ''));
     }
-  }, []);
+  }, [router]);
 
   const nextStep = () => setCurrentStep((s) => Math.min(s + 1, 4));
 

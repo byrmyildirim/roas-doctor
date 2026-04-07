@@ -18,7 +18,12 @@ export class PrismaSessionStorage {
           domain: session.shop,
           accessToken: session.accessToken!,
           shopId: session.id,
-          organizationId: 'default_org_id', // Onboarding akışında organizasyon oluşturulacak
+          organization: {
+            connectOrCreate: {
+              where: { id: 'default_org_id' },
+              create: { id: 'default_org_id', name: 'Roas Doctor Organization' }
+            }
+          }
         },
       });
       return true;

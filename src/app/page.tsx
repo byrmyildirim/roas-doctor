@@ -1,6 +1,7 @@
 'use client';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Sparkles, ArrowRight, Activity, Zap, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '@/components/layout/LanguageProvider';
 import { LanguageSelector } from '@/components/layout/LanguageSelector';
@@ -8,6 +9,16 @@ import { ThemeToggle } from '@/components/layout/ThemeToggle';
 
 export default function Home() {
   const { t } = useLanguage();
+  const router = useRouter();
+
+  useEffect(() => {
+    // Eğer URL'de shop parametresi varsa (Shopify içinden geliniyorsa) 
+    // kullanıcıyı direkt dashboard'a veya auth akışına yönlendirebiliriz.
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('shop') || params.get('host')) {
+      router.push(`/dashboard${window.location.search}`);
+    }
+  }, [router]);
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0b] text-zinc-900 dark:text-white flex flex-col font-sans selection:bg-blue-500/30 overflow-hidden relative transition-colors duration-300">

@@ -1,16 +1,24 @@
 import React from 'react';
 import prisma from '@/lib/db';
 import DashboardClient from './DashboardClient';
-// Comment: auth import missing but we can skip if not strictly protecting here, or add import { auth } from '@/lib/auth'; if auth is stable. Since I see auth() used before, let's keep it simple without auth if it breaks, but wait, `session` isn't strictly required for calculating global stats for MVP.
-// The user just wanted to exit simulation mode.
 
-export default async function DashboardPage() {
-  // DB'den gelen canlı veriler
-  const shopCount = await prisma.shopConnection.count().catch(() => 0);
-  const productCount = await prisma.product.count().catch(() => 0);
+export const dynamic = 'force-dynamic';
+
+export default async function DashboardPage({ searchParams }: { searchParams: Promise<{ shop?: string }> }) {
+  const { shop } = await searchParams;
   
-  // Eğer en son ScoreSnapshot varsa al, yoksa sıfır.
+  // DB'den gelen canlı veriler
+  // Eğer shop varsa ona göre filtreliyoruz
+  const shopCount = await prisma.shopConnection.count().catch(() => 0);
+  
+  // Ürün sayısı - Belirli mağazaya göre filtreleme
+  const productCount = await prisma.product.count({
+    where: shop ? { shopConnection: { domain: shop } } : {}
+  }).catch(() => 0);
+  
+  // En son skor snapshotu
   const latestScore = await prisma.scoreSnapshot.findFirst({
+    where: shop ? { organization: { shops: { some: { domain: shop } } } } : {},
     orderBy: { timestamp: 'desc' }
   }).catch(() => null);
 
@@ -20,7 +28,7 @@ export default async function DashboardPage() {
     googleScore: latestScore?.googleScore || 0,
     shopifyStoreCount: shopCount,
     productsCount: productCount,
-    lastSync: latestScore ? latestScore.timestamp.toLocaleDateString() : 'Hiç senkronizasyon yapılmadı',
+    lastSync: latestScore ? latestScore.timestamp.toLocaleTimeString() : 'Bekleniyor...',
   };
 
   return <DashboardClient stats={stats} />;

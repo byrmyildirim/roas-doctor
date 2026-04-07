@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getShopifyApi } from '@/lib/shopify';
 import { sessionStorage } from '@/lib/session-storage';
+import { ShopifySyncService } from '@/lib/services/sync-service';
+import prisma from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -28,7 +30,17 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to store shop session' }, { status: 500 });
     }
 
-    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/dashboard`);
+    // Arka planda ürün kataloğunu senkronize et
+    const dbShop = await prisma.shopConnection.findFirst({
+        where: { domain: session.shop }
+    });
+
+    if (dbShop) {
+        const syncService = new ShopifySyncService();
+        await syncService.syncCatalog(session, dbShop.id);
+    }
+
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/dashboard?shop=${session.shop}`);
   } catch (error) {
     console.error('Shopify OAuth Callback Error:', error);
     return NextResponse.json({ error: 'OAuth Callback failed' }, { status: 500 });

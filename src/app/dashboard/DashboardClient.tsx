@@ -137,7 +137,7 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/50 shadow-sm">
+               <div className="p-6 rounded-2xl bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800/50 shadow-sm">
                 <h3 className="text-sm font-medium text-zinc-500 dark:text-zinc-400 mb-4">{t('ad_health')}</h3>
                 <div className="space-y-4">
                    <div className="flex items-center justify-between">
@@ -145,14 +145,24 @@ export default function DashboardClient({ stats }: { stats: DashboardStats }) {
                        <div className="w-2 h-2 rounded-full bg-blue-500" />
                        <span className="text-sm text-zinc-700 dark:text-zinc-300 font-medium">Meta Ads (Roas Dr.)</span>
                      </div>
-                     <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">{t('active')}</span>
+                     <div className="flex items-center gap-2">
+                       <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">{t('active')}</span>
+                       <button className="px-2 py-1 bg-blue-500/10 text-blue-600 dark:text-blue-400 text-[10px] font-bold rounded-lg border border-blue-500/20 hover:bg-blue-500/20 transition-all">
+                         {t('connect_meta')}
+                       </button>
+                     </div>
                    </div>
                    <div className="flex items-center justify-between">
                      <div className="flex items-center gap-3">
                        <div className="w-2 h-2 rounded-full bg-amber-500" />
                        <span className="text-sm text-zinc-700 dark:text-zinc-300 font-medium">Google Ads (Main)</span>
                      </div>
-                     <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">{t('active')}</span>
+                     <div className="flex items-center gap-2">
+                       <span className="text-xs text-emerald-600 dark:text-emerald-400 font-bold">{t('active')}</span>
+                       <button className="px-2 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 text-[10px] font-bold rounded-lg border border-amber-500/20 hover:bg-amber-500/20 transition-all">
+                         {t('connect_google')}
+                       </button>
+                     </div>
                    </div>
                    <div className="flex items-center justify-between">
                      <div className="flex items-center gap-3">
