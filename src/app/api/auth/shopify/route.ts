@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { shopify } from '@/lib/shopify';
+import { getShopifyApi } from '@/lib/shopify';
+
+// Build sırasında statik derlemeyi engelle
+export const dynamic = 'force-dynamic';
 
 // Shopify OAuth Başlatma
 export async function GET(req: NextRequest) {
@@ -10,12 +13,13 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ error: 'Shop parameter is missing' }, { status: 400 });
   }
 
-  // Shopify'a yönlendirme (İzin İsteme Ekranı)
+  const shopify = getShopifyApi();
+
   return await shopify.auth.begin({
     shop: shopify.utils.sanitizeShop(shop)!,
     callbackPath: '/api/auth/callback/shopify',
     isOnline: false,
     rawRequest: req,
-    rawResponse: new Response(), // Not strictly needed for begin in some adapters but safe to pass
+    rawResponse: new Response(),
   });
 }

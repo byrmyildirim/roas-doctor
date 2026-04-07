@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+export const dynamic = 'force-dynamic';
+
 // Meta Ads OAuth Yönlendirmesi
 export async function GET(req: NextRequest) {
   const metaClientId = process.env.META_CLIENT_ID;

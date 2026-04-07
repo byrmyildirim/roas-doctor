@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { shopify } from '@/lib/shopify';
+import { getShopifyApi } from '@/lib/shopify';
 import { sessionStorage } from '@/lib/session-storage';
-import prisma from '@/lib/db';
+
+export const dynamic = 'force-dynamic';
 
 // Shopify OAuth Callback
 export async function GET(req: NextRequest) {
@@ -13,13 +14,13 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Shop parameter is missing' }, { status: 400 });
     }
 
-    // Shopify'dan gelen veriyi işle ve Session oluştur
+    const shopify = getShopifyApi();
+
     const callbackResponse = await shopify.auth.callback({
       rawRequest: req,
-      rawResponse: new Response(), 
+      rawResponse: new Response(),
     });
 
-    // Session'ı veritabanına kaydet
     const { session } = callbackResponse;
     const isStored = await sessionStorage.storeSession(session);
 
@@ -27,7 +28,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to store shop session' }, { status: 500 });
     }
 
-    // Kurulum sonrası panele yönlendir
     return NextResponse.redirect(`${process.env.NEXT_PUBLIC_APP_URL}/dashboard`);
   } catch (error) {
     console.error('Shopify OAuth Callback Error:', error);
