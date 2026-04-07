@@ -57,7 +57,7 @@ export default function OnboardingPage() {
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-xl shadow-blue-500/20">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <span className="font-bold text-xl tracking-tight">AdStore Match</span>
+          <span className="font-bold text-xl tracking-tight">{t('app_name')}</span>
         </div>
         <div className="flex items-center gap-6">
           <LanguageSelector />
@@ -240,7 +240,7 @@ export default function OnboardingPage() {
 
       {/* Footer */}
       <footer className="w-full py-8 text-center text-zinc-600 text-[10px] font-bold uppercase tracking-widest z-10">
-        Secure | Multi-Tenant | AdStore Match Audit Pro
+        Secure | Multi-Tenant | {t('app_name')} Audit Pro
       </footer>
     </div>
   );

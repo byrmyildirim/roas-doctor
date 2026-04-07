@@ -46,7 +46,7 @@ export default function Shell({ children }: { children: React.ReactNode }) {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <span className="font-bold text-lg tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-zinc-400">
-            AdStore Match
+            {t('app_name')}
           </span>
         </div>
 

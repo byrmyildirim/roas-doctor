@@ -37,6 +37,22 @@ export const dictionaries = {
     launch_primary: "Ana Denetimi Başlat",
     benchmarks: "Sektör Karşılaştırması",
     export_pdf: "Geçmişi Dışa Aktar (PDF)",
+    // Landing Page
+    app_name: "Roas Doctor",
+    sign_in: "Giriş Yap",
+    get_started: "Hemen Başla",
+    phase_1: "Faz 1 Aktif",
+    landing_title_1: "Tahmin yürütmeyi bırakın.",
+    landing_title_2: "Trafik uyumunuzu anında denetleyin.",
+    landing_subtitle: "Meta Reklamları, Google Reklamları ve Shopify mağazanızın uyumunu analiz eden ilk multi-tenant motoru. ROAS'ınızı düşüren darboğazları anında bulun.",
+    start_free_audit: "Ücretsiz Denetimi Başlat",
+    view_demo: "Demo Paneli İncele",
+    feature_1_title: "Anında Semantik Eşleştirme",
+    feature_1_desc: "Reklam kancaları (hooks) ile açılış sayfaları arasındaki vaat uyumsuzluklarını otomatik tespit edin.",
+    feature_2_title: "Gerçek Zamanlı Webhook",
+    feature_2_desc: "Shopify katalog güncellemeleri anında senkronize olur; manuel kontrol ve takibe gerek kalmaz.",
+    feature_3_title: "Önceliklendirilmiş Aksiyonlar",
+    feature_3_desc: "Gelir ve ciro üzerindeki etkisine göre sıralanmış, yapay zeka destekli uygulama planları edinin.",
   },
   en: {
     dashboard: "Dashboard",
@@ -75,6 +91,22 @@ export const dictionaries = {
     launch_primary: "Launch Primary Audit",
     benchmarks: "Latest Benchmark",
     export_pdf: "Export Full History (PDF)",
+    // Landing Page
+    app_name: "Roas Doctor",
+    sign_in: "Sign In",
+    get_started: "Get Started",
+    phase_1: "Phase 1 Launched",
+    landing_title_1: "Stop guessing.",
+    landing_title_2: "Audit your traffic alignment instantly.",
+    landing_subtitle: "The first multi-tenant engine strictly dedicated to analyzing the convergence of your Meta Ads, Google Ads, and Shopify storefront. Find the bottlenecks killing your ROAS.",
+    start_free_audit: "Start Free Audit",
+    view_demo: "View Demo Dashboard",
+    feature_1_title: "Instant Semantic Matching",
+    feature_1_desc: "Detect promise-mismatches between ad hooks and landing pages.",
+    feature_2_title: "Real-time Webhook Sync",
+    feature_2_desc: "Catalog updates sync in real-time, zero manual tracking required.",
+    feature_3_title: "Prioritized Actions",
+    feature_3_desc: "Get AI-driven implementation plans sorted by revenue impact."
   }
 };
 

@@ -11,7 +11,7 @@ type LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLangState] = useState<Language>('en');
+  const [lang, setLangState] = useState<Language>('tr');
 
   useEffect(() => {
     // Tarayıcıdan daha önce seçilmiş dil varsa al

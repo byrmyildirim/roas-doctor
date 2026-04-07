@@ -1,8 +1,13 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
 import { Sparkles, ArrowRight, Activity, Zap, CheckCircle2 } from 'lucide-react';
+import { useLanguage } from '@/components/layout/LanguageProvider';
+import { LanguageSelector } from '@/components/layout/LanguageSelector';
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen bg-[#0a0a0b] text-white flex flex-col font-sans selection:bg-blue-500/30 overflow-hidden relative">
       {/* Background Decor */}
@@ -21,17 +26,18 @@ export default function Home() {
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-xl shadow-blue-500/20">
             <Sparkles className="w-6 h-6 text-white" />
           </div>
-          <span className="font-bold text-xl tracking-tight">AdStore Match</span>
+          <span className="font-bold text-xl tracking-tight">{t('app_name')}</span>
         </div>
         <div className="flex items-center gap-4">
+          <LanguageSelector />
           <Link href="/onboarding" className="text-sm font-semibold text-zinc-400 hover:text-white transition-colors">
-            Sign In
+            {t('sign_in')}
           </Link>
           <Link 
             href="/onboarding" 
             className="px-4 py-2 bg-white text-black text-sm font-bold rounded-full hover:bg-zinc-200 transition-all shadow-xl shadow-white/10 active:scale-95"
           >
-            Get Started
+            {t('get_started')}
           </Link>
         </div>
       </nav>
@@ -43,18 +49,18 @@ export default function Home() {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
           </span>
-          Phase 1 Launched
+          {t('phase_1')}
         </div>
         
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter max-w-4xl mb-8 leading-[1.1]">
-          Stop guessing.<br />
+          {t('landing_title_1')}<br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400">
-            Audit your traffic alignment instantly.
+            {t('landing_title_2')}
           </span>
         </h1>
         
         <p className="text-lg md:text-xl text-zinc-400 max-w-2xl mb-12 leading-relaxed">
-          The first multi-tenant engine strictly dedicated to analyzing the convergence of your Meta Ads, Google Ads, and Shopify storefront. Find the bottlenecks killing your ROAS.
+          {t('landing_subtitle')}
         </p>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-20">
@@ -62,23 +68,23 @@ export default function Home() {
             href="/onboarding"
             className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-3 hover:opacity-90 transition-all active:scale-95 shadow-2xl shadow-blue-600/25 group"
           >
-            Start Free Audit
+            {t('start_free_audit')}
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
           <Link 
             href="/dashboard"
             className="w-full sm:w-auto px-8 py-4 bg-zinc-900 border border-zinc-800 rounded-2xl text-white font-bold text-lg flex items-center justify-center gap-3 hover:bg-zinc-800 transition-all active:scale-95"
           >
-            View Demo Dashboard
+            {t('view_demo')}
           </Link>
         </div>
 
         {/* Feature Highlights */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl">
           {[
-            { icon: Zap, title: 'Instant Semantic Matching', desc: 'Detect promise-mismatches between ad hooks and landing pages.' },
-            { icon: Activity, title: 'Real-time Webhook Sync', desc: 'Catalog updates sync in real-time, zero manual tracking required.' },
-            { icon: CheckCircle2, title: 'Prioritized Actions', desc: 'Get AI-driven implementation plans sorted by revenue impact.' }
+            { icon: Zap, title: t('feature_1_title'), desc: t('feature_1_desc') },
+            { icon: Activity, title: t('feature_2_title'), desc: t('feature_2_desc') },
+            { icon: CheckCircle2, title: t('feature_3_title'), desc: t('feature_3_desc') }
           ].map((feat, idx) => (
             <div key={idx} className="p-6 rounded-3xl bg-zinc-900/50 border border-zinc-800/50 text-left backdrop-blur-xl hover:bg-zinc-900 transition-colors">
               <div className="w-12 h-12 rounded-2xl bg-zinc-950 border border-zinc-800 flex items-center justify-center mb-4 text-blue-400">
