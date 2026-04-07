@@ -1,5 +1,4 @@
-// Shopify API Client & OAuth Utilities
-import { shopifyApi, LATEST_API_VERSION, Session } from '@shopify/shopify-api';
+import { shopifyApi, ApiVersion, Session } from '@shopify/shopify-api';
 import '@shopify/shopify-api/adapters/node';
 
 // Shopify API Yapılandırması
@@ -8,7 +7,7 @@ export const shopify = shopifyApi({
   apiSecretKey: process.env.SHOPIFY_CLIENT_SECRET!,
   scopes: process.env.SHOPIFY_SCOPES?.split(',') || [],
   hostName: process.env.NEXT_PUBLIC_APP_URL?.replace('https://', '') || '',
-  apiVersion: LATEST_API_VERSION,
+  apiVersion: ApiVersion.January25,
   isEmbeddedApp: true,
 });
 
