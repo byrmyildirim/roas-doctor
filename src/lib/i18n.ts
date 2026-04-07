@@ -54,6 +54,12 @@ export const dictionaries = {
     feature_3_title: "Önceliklendirilmiş Aksiyonlar",
     feature_3_desc: "Gelir ve ciro üzerindeki etkisine göre sıralanmış, yapay zeka destekli uygulama planları edinin.",
     skip_step: "Bu adımı atla (Zaten kurulu)",
+    export_report_title: "Yönetici Raporunu Dışa Aktar",
+    export_report_desc: "Müşterilerle veya paydaşlarla paylaşmak üzere trafik uyumunuzun PDF dökümünü indirin.",
+    download_pdf: "PDF İndir",
+    pro_feature: "Pro Özellik: Derin Semantik Denetim",
+    pro_desc: "Açılış sayfası ile reklam arasındaki görsel ve metinsel duygu/ton uyumsuzluklarını tespit etmek için Yapay Zeka motorumuzu devreye alın.",
+    upgrade_pro: "Pro'ya Geçiş Yap",
   },
   en: {
     dashboard: "Dashboard",
@@ -109,6 +115,12 @@ export const dictionaries = {
     feature_3_title: "Prioritized Actions",
     feature_3_desc: "Get AI-driven implementation plans sorted by revenue impact.",
     skip_step: "Skip this step (Already installed)",
+    export_report_title: "Export Executive Report",
+    export_report_desc: "Download a PDF breakdown of your traffic alignment to share with clients or stakeholders.",
+    download_pdf: "Download PDF",
+    pro_feature: "Pro Feature: AI Semantic Audit",
+    pro_desc: "Enable our Deep Semantic analysis to detect \"Mood and Tone\" mismatches between your creative and page copy.",
+    upgrade_pro: "Upgrade to Pro",
   }
 };
 
