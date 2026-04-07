@@ -12,6 +12,10 @@ export class ShopifySyncService {
         variables: { first: 50 }
       });
 
+      if (!response?.data?.products?.edges) {
+        throw new Error('Invalid response from Shopify API');
+      }
+
       const productEdges = response.data.products.edges;
 
       // Verileri Prisma'ya kaydet
@@ -23,14 +27,14 @@ export class ShopifySyncService {
           update: {
             title: node.title,
             handle: node.handle,
-            description: node.descriptionHtml,
+            description: node.descriptionHtml || '',
             imageUrl: node.images.edges[0]?.node?.url || '',
           },
           create: {
             id: node.id,
             title: node.title,
             handle: node.handle,
-            description: node.descriptionHtml,
+            description: node.descriptionHtml || '',
             imageUrl: node.images.edges[0]?.node?.url || '',
             shopConnectionId: shopConnectionId,
           }

@@ -30,11 +30,33 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Failed to store shop session' }, { status: 500 });
     }
 
-    // Arka planda ürün kataloğunu senkronize et
-    const dbShop = await prisma.shopConnection.findFirst({
-        where: { domain: session.shop }
+    // Organizasyon ve Mağaza Bağlantısını Veritabanına Kaydet
+    let organization = await prisma.organization.findFirst({
+        where: { shops: { some: { domain: session.shop } } }
     });
 
+    if (!organization) {
+        organization = await prisma.organization.create({
+            data: { name: `${session.shop.split('.')[0]} Workspace` }
+        });
+    }
+
+    const dbShop = await prisma.shopConnection.upsert({
+        where: { domain: session.shop },
+        update: {
+            accessToken: session.accessToken || '',
+            status: 'CONNECTED',
+            lastSyncAt: new Date()
+        },
+        create: {
+            domain: session.shop,
+            accessToken: session.accessToken || '',
+            organizationId: organization.id,
+            status: 'CONNECTED'
+        }
+    });
+
+    // Arka planda ürün kataloğunu senkronize et
     if (dbShop) {
         const syncService = new ShopifySyncService();
         await syncService.syncCatalog(session, dbShop.id);

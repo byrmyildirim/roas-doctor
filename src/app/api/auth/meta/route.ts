@@ -9,7 +9,9 @@ export async function GET(req: NextRequest) {
   const scope = 'ads_read,ads_management,ads_report_read'; // Minimum gerekli izinler
 
   if (!metaClientId) {
-    return NextResponse.json({ error: 'META_CLIENT_ID not configured' }, { status: 500 });
+    const errorUrl = new URL('/dashboard/settings', req.url);
+    errorUrl.searchParams.set('error', 'meta_id_missing');
+    return NextResponse.redirect(errorUrl);
   }
 
   // Kullanıcıyı Meta OAuth ekranına yönlendir

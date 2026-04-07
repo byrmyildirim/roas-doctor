@@ -59,6 +59,7 @@ export const dictionaries = {
     pro_feature: "Akıllı Analiz Özelliği",
     pro_desc: "Açılış sayfası ile reklam arasındaki görsel ve metinsel uyumsuzlukları tespit etmek için motoru devreye alın.",
     upgrade_pro: "Analizi Başlat",
+    integration_credentials: "Entegrasyon Bilgileri",
   },
   en: {
     dashboard: "Dashboard",
@@ -119,6 +120,7 @@ export const dictionaries = {
     pro_feature: "Smart Analysis Feature",
     pro_desc: "Enable our analysis engine to detect mismatches between your creative and page copy.",
     upgrade_pro: "Start Analysis",
+    integration_credentials: "Integration Credentials",
   }
 };
 
